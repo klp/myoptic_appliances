@@ -31,17 +31,18 @@ def tag_pos(setences):
     return pos_tagged
 
 
-file_path = "../../placards_brass-jewelers_truck-horses_and_steamers.txt"
-paragraphs = load_text(file_path)
-sentences = segment_sentences(paragraphs)
-pos_tagged = tag_pos(sentences)
+placards_path = "source_txt/placards_brass-jewelers_truck-horses_and_steamers.txt"
+paragraphs = load_text(placards_path)
 
-output = json.dumps(
-    {"paragraphs": paragraphs, "sentences": sentences, "pos_tagged": pos_tagged},
-    indent=4,
-)
+structured_data = []
+for paragraph in paragraphs:
+    sentences = segment_sentences([paragraph])
+    structured_paragraph = []
+    for sentence_list in sentences:
+        for sentence in sentence_list:
+            pos_data = tag_pos(sentence)
+            structured_paragraph.append({"sentence": sentence, "pos_data": pos_data})
+    structured_data.append({"paragraph": paragraph, "sentences": structured_paragraph})
 
-with open("output.json", "w") as json_file:
-    json_file.write(output)
-
-print("JSON data saved to 'output.json'")
+with open("processed_txt/placards_process.json", "w") as json_file:
+    json.dump(structured_data, json_file, indent=4)
