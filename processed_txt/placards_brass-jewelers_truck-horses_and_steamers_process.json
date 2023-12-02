@@ -1,96 +1,11 @@
 [
     {
-        "paragraph": "CHAPTER XL.\nPLACARDS, BRASS-JEWELERS, TRUCK-HORSES, AND STEAMERS",
+        "paragraph": "PLACARDS, BRASS-JEWELERS, TRUCK-HORSES, AND STEAMERS",
         "sentences": [
-            {
-                "sentence": "CHAPTER XL.",
-                "pos_data": [
-                    [
-                        [
-                            [
-                                "CHAPTER",
-                                "NOUN"
-                            ],
-                            [
-                                "XL",
-                                "PROPN"
-                            ],
-                            [
-                                ".",
-                                "PUNCT"
-                            ]
-                        ],
-                        [
-                            [
-                                "PLACARDS",
-                                "PROPN"
-                            ],
-                            [
-                                ",",
-                                "PUNCT"
-                            ],
-                            [
-                                "BRASS",
-                                "PROPN"
-                            ],
-                            [
-                                "-",
-                                "PUNCT"
-                            ],
-                            [
-                                "JEWELERS",
-                                "PROPN"
-                            ],
-                            [
-                                ",",
-                                "PUNCT"
-                            ],
-                            [
-                                "TRUCK",
-                                "PROPN"
-                            ],
-                            [
-                                "-",
-                                "PUNCT"
-                            ],
-                            [
-                                "HORSES",
-                                "NOUN"
-                            ],
-                            [
-                                ",",
-                                "PUNCT"
-                            ],
-                            [
-                                "AND",
-                                "CCONJ"
-                            ],
-                            [
-                                "STEAMERS",
-                                "NOUN"
-                            ]
-                        ]
-                    ]
-                ]
-            },
             {
                 "sentence": "PLACARDS, BRASS-JEWELERS, TRUCK-HORSES, AND STEAMERS",
                 "pos_data": [
                     [
-                        [
-                            [
-                                "CHAPTER",
-                                "NOUN"
-                            ],
-                            [
-                                "XL",
-                                "PROPN"
-                            ],
-                            [
-                                ".",
-                                "PUNCT"
-                            ]
-                        ],
                         [
                             [
                                 "PLACARDS",
@@ -147,17 +62,13 @@
         ]
     },
     {
-        "paragraph": "\nAs I wish to group together what fell under my observation concerning\nthe Liverpool docks, and the scenes roundabout, I will try to throw\ninto this chapter various minor things that I recall.",
+        "paragraph": "As I wish to group together what fell under my observation concerning\nthe Liverpool docks, and the scenes roundabout, I will try to throw\ninto this chapter various minor things that I recall.",
         "sentences": [
             {
-                "sentence": "\nAs I wish to group together what fell under my observation concerning\nthe Liverpool docks, and the scenes roundabout, I will try to throw\ninto this chapter various minor things that I recall.",
+                "sentence": "As I wish to group together what fell under my observation concerning\nthe Liverpool docks, and the scenes roundabout, I will try to throw\ninto this chapter various minor things that I recall.",
                 "pos_data": [
                     [
                         [
-                            [
-                                "\n",
-                                "SPACE"
-                            ],
                             [
                                 "As",
                                 "SCONJ"

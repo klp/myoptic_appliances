@@ -31,18 +31,28 @@ def tag_pos(setences):
     return pos_tagged
 
 
-placards_path = "source_txt/placards_brass-jewelers_truck-horses_and_steamers.txt"
-paragraphs = load_text(placards_path)
+file_paths = [
+    "source_txt/placards_brass-jewelers_truck-horses_and_steamers.txt",
+    "source_txt/what_redburn_saw_in_launcelott's-hey.txt",
+]
+for file_path in file_paths:
+    paragraphs = load_text(file_path)
+    structured_data = []
+    for paragraph in paragraphs:
+        sentences = segment_sentences([paragraph])
+        structured_paragraph = []
+        for sentence_list in sentences:
+            for sentence in sentence_list:
+                pos_data = tag_pos(sentence)
+                structured_paragraph.append(
+                    {"sentence": sentence, "pos_data": pos_data}
+                )
+        structured_data.append(
+            {"paragraph": paragraph, "sentences": structured_paragraph}
+        )
 
-structured_data = []
-for paragraph in paragraphs:
-    sentences = segment_sentences([paragraph])
-    structured_paragraph = []
-    for sentence_list in sentences:
-        for sentence in sentence_list:
-            pos_data = tag_pos(sentence)
-            structured_paragraph.append({"sentence": sentence, "pos_data": pos_data})
-    structured_data.append({"paragraph": paragraph, "sentences": structured_paragraph})
-
-with open("processed_txt/placards_process.json", "w") as json_file:
-    json.dump(structured_data, json_file, indent=4)
+    json_file_name = "processed_txt/" + file_path.split("/")[-1].replace(
+        ".txt", "_process.json"
+    )
+    with open(json_file_name, "w") as json_file:
+        json.dump(structured_data, json_file, indent=4)
