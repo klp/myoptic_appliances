@@ -9,17 +9,17 @@ async function loadAndDisplayJSON() {
     }
     const data = await response.json();
 
-    console.log(data);
-
     const contentDiv = document.getElementById("content");
 
     data.forEach((paragraphData) => {
       const paraElement = document.createElement("p");
+
       paraElement.textContent = paragraphData.paragraph;
       contentDiv.appendChild(paraElement);
 
       paragraphData.sentences.forEach((sentenceData) => {
         const sentenceElement = document.createElement("span");
+
         sentenceElement.textContent = sentenceData.sentence + " ";
         paraElement.appendChild(sentenceElement);
       });
