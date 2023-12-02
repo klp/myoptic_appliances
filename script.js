@@ -9,10 +9,8 @@ async function loadAndDisplayJSON() {
     }
     const data = await response.json();
 
-    // Now you have your data in the 'data' variable
-    console.log(data); // You can see your data in the browser's console
+    console.log(data);
 
-    // Example: Displaying the content on the webpage
     const contentDiv = document.getElementById("content");
 
     data.forEach((paragraphData) => {
