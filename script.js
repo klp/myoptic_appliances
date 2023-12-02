@@ -1,6 +1,6 @@
 async function loadAndDisplayJSON() {
   const placardsJsonPath =
-    "processed_txt/placards_brass-jewelers_truck-horses_and_steamers_process.json";
+    "processed_txt/a_mysterious_night_in_london_process.json";
 
   try {
     const response = await fetch(placardsJsonPath);
