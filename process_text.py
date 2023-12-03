@@ -19,15 +19,12 @@ def segment_sentences(paragraphs):
     return [sent_tokenize(paragraph) for paragraph in paragraphs]
 
 
-def tag_pos(setences):
+def tag_pos(sentences):
     pos_tagged = []
-    for paragraph in sentences:
-        paragraph_pos = []
-        for sentence in paragraph:
-            doc = nlp(sentence)
-            sentence_tags = [(token.text, token.pos_) for token in doc]
-            paragraph_pos.append(sentence_tags)
-        pos_tagged.append(paragraph_pos)
+    for sentence in sentences:
+        doc = nlp(sentence)
+        sentence_tags = [(token.text, token.pos_) for token in doc]
+        pos_tagged.append(sentence_tags)
     return pos_tagged
 
 
@@ -36,18 +33,17 @@ file_paths = [
     "source_txt/what_redburn_saw_in_launcelott's-hey.txt",
     "source_txt/a_mysterious_night_in_london.txt",
 ]
+
 for file_path in file_paths:
     paragraphs = load_text(file_path)
     structured_data = []
     for paragraph in paragraphs:
-        sentences = segment_sentences([paragraph])
+        sentences = segment_sentences([paragraph])[0]
         structured_paragraph = []
-        for sentence_list in sentences:
-            for sentence in sentence_list:
-                pos_data = tag_pos(sentence)
-                structured_paragraph.append(
-                    {"sentence": sentence, "pos_data": pos_data}
-                )
+        for sentence in sentences:
+            pos_data = tag_pos([sentence])  # Changed here
+            structured_paragraph.append(
+                {"sentence": sentence, "pos_data": pos_data[0]}  
         structured_data.append(
             {"paragraph": paragraph, "sentences": structured_paragraph}
         )

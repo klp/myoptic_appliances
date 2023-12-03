@@ -14,15 +14,14 @@ async function loadAndDisplayJSON() {
     data.forEach((paragraphData) => {
       const paraElement = document.createElement("p");
 
-      paraElement.textContent = paragraphData.paragraph;
-      contentDiv.appendChild(paraElement);
-
+      // loop through each sentence in the paragraph
       paragraphData.sentences.forEach((sentenceData) => {
         const sentenceElement = document.createElement("span");
-
         sentenceElement.textContent = sentenceData.sentence + " ";
         paraElement.appendChild(sentenceElement);
       });
+
+      contentDiv.appendChild(paraElement);
     });
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
