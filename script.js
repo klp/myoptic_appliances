@@ -1,15 +1,17 @@
-async function loadAndDisplayJSON() {
-  const placardsJsonPath =
-    "processed_txt/a_mysterious_night_in_london_process.json";
+const jsonPaths = [
+  "processed_txt/a_mysterious_night_in_london_process.json",
+  "processed_txt/placards_brass-jewelers_truck-horses_and_steamers_process.json",
+  "processed_txt/what_redburn_saw_in_launcelott's-hey_process.json",
+];
 
+async function loadAndDisplayJSON(jsonPath) {
   try {
-    const response = await fetch(placardsJsonPath);
+    const response = await fetch(jsonPath);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
 
-    // Randomly select a paragraph
     const selectedParagraphIndex = Math.floor(Math.random() * data.length);
     const selectedParagraphData = data[selectedParagraphIndex];
 
@@ -22,11 +24,9 @@ async function loadAndDisplayJSON() {
     selectedParagraphData.sentences.forEach((sentenceData, index) => {
       const sentenceElement = document.createElement("span");
       sentenceElement.textContent = sentenceData.sentence + " ";
-      // store sentence metadata
       sentenceElement.dataset.sentenceMetadata = JSON.stringify(sentenceData);
-      // store POS data
       sentenceElement.dataset.pos = JSON.stringify(sentenceData.pos);
-      sentenceElement.id = `sentence-${index}`; // assign an ID later
+      sentenceElement.id = `sentence-${index}`;
 
       paraElement.appendChild(sentenceElement);
     });
@@ -37,4 +37,23 @@ async function loadAndDisplayJSON() {
   }
 }
 
-loadAndDisplayJSON();
+function createLinks() {
+  const linksDiv = document.getElementById("links");
+
+  jsonPaths.forEach((path, index) => {
+    const link = document.createElement("a");
+    link.href = "#";
+    link.textContent = `Document ${index + 1}`;
+    link.onclick = () => loadAndDisplayJSON(path);
+
+    linksDiv.appendChild(link);
+    if (index < jsonPaths.length - 1) {
+      linksDiv.appendChild(document.createTextNode(" | "));
+    }
+  });
+}
+
+const randomJsonPath = jsonPaths[Math.floor(Math.random() * jsonPaths.length)];
+loadAndDisplayJSON(randomJsonPath);
+
+createLinks();
