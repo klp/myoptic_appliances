@@ -9,20 +9,29 @@ async function loadAndDisplayJSON() {
     }
     const data = await response.json();
 
+    // Randomly select a paragraph
+    const selectedParagraphIndex = Math.floor(Math.random() * data.length);
+    const selectedParagraphData = data[selectedParagraphIndex];
+
     const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = ""; // clear previous content
 
-    data.forEach((paragraphData) => {
-      const paraElement = document.createElement("p");
+    const paraElement = document.createElement("p");
+    paraElement.id = "selected-paragraph";
 
-      // loop through each sentence in the paragraph
-      paragraphData.sentences.forEach((sentenceData) => {
-        const sentenceElement = document.createElement("span");
-        sentenceElement.textContent = sentenceData.sentence + " ";
-        paraElement.appendChild(sentenceElement);
-      });
+    selectedParagraphData.sentences.forEach((sentenceData, index) => {
+      const sentenceElement = document.createElement("span");
+      sentenceElement.textContent = sentenceData.sentence + " ";
+      // store sentence metadata
+      sentenceElement.dataset.sentenceMetadata = JSON.stringify(sentenceData);
+      // store POS data
+      sentenceElement.dataset.pos = JSON.stringify(sentenceData.pos);
+      sentenceElement.id = `sentence-${index}`; // assign an ID later
 
-      contentDiv.appendChild(paraElement);
+      paraElement.appendChild(sentenceElement);
     });
+
+    contentDiv.appendChild(paraElement);
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
   }
