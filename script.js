@@ -37,13 +37,27 @@ async function loadAndDisplayJSON(jsonPath) {
   }
 }
 
+function formatLinkText(path) {
+  const formattedText = path
+    .split("/")
+    .pop()
+    .split(".json")[0]
+    .replace(/_/g, " ")
+    .replace(" process", "");
+
+  return formattedText
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 function createLinks() {
   const linksDiv = document.getElementById("links");
 
   jsonPaths.forEach((path, index) => {
     const link = document.createElement("a");
     link.href = "#";
-    link.textContent = `Document ${index + 1}`;
+    link.textContent = formatLinkText(path);
     link.onclick = () => loadAndDisplayJSON(path);
 
     linksDiv.appendChild(link);
@@ -53,7 +67,7 @@ function createLinks() {
   });
 }
 
+createLinks();
+
 const randomJsonPath = jsonPaths[Math.floor(Math.random() * jsonPaths.length)];
 loadAndDisplayJSON(randomJsonPath);
-
-createLinks();
