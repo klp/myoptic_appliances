@@ -23,10 +23,16 @@ async function loadAndDisplayJSON(jsonPath) {
 
     selectedParagraphData.sentences.forEach((sentenceData, index) => {
       const sentenceElement = document.createElement("span");
-      sentenceElement.textContent = sentenceData.sentence + " ";
-      sentenceElement.dataset.sentenceMetadata = JSON.stringify(sentenceData);
-      sentenceElement.dataset.pos = JSON.stringify(sentenceData.pos);
       sentenceElement.id = `sentence-${index}`;
+
+      sentenceData.pos_data.forEach(([word, pos]) => {
+        const wordElement = document.createElement("span");
+        wordElement.textContent = word + " ";
+        if (pos === "ADJ") {
+          wordElement.classList.add("adjective");
+        }
+        sentenceElement.appendChild(wordElement);
+      });
 
       paraElement.appendChild(sentenceElement);
     });
@@ -79,5 +85,16 @@ function loadInitialJSON() {
     loadAndDisplayJSON(randomJsonPath);
   }
 }
+
+function toggleAdjectives() {
+  const adjectives = document.querySelectorAll(".adjective");
+  adjectives.forEach((adjective) => {
+    adjective.style.display = adjective.style.display === "none" ? "" : "none";
+  });
+}
+
+document
+  .getElementById("toggleButton")
+  .addEventListener("click", toggleAdjectives);
 
 loadInitialJSON();
