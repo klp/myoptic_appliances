@@ -4,6 +4,38 @@ const jsonPaths = [
   "processed_txt/what_redburn_saw_in_launcelott's-hey_process.json",
 ];
 
+function typeText(paragraphData, elementId, delay = 100) {
+  let sentenceIndex = 0;
+  let wordIndex = 0;
+  const contentDiv = document.getElementById(elementId);
+
+  function typeWriter() {
+    if (sentenceIndex < paragraphData.length) {
+      const sentenceData = paragraphData[sentenceIndex];
+      if (wordIndex < sentenceData.pos_data.length) {
+        const [word, pos] = sentenceData.pos_data[wordIndex];
+        const wordElement = document.createElement("span");
+        wordElement.textContent = word + " ";
+        if (pos === "ADJ") {
+          wordElement.classList.add("adjective");
+        }
+        if (pos === "NOUN") {
+          wordElement.classList.add("noun");
+        }
+        contentDiv.appendChild(wordElement);
+        wordIndex++;
+        setTimeout(typeWriter, delay);
+      } else {
+        contentDiv.appendChild(document.createElement("br"));
+        sentenceIndex++;
+        wordIndex = 0;
+        setTimeout(typeWriter, delay);
+      }
+    }
+  }
+  typeWriter();
+}
+
 async function loadAndDisplayJSON(jsonPath) {
   try {
     const response = await fetch(jsonPath);
@@ -20,27 +52,9 @@ async function loadAndDisplayJSON(jsonPath) {
 
     const paraElement = document.createElement("p");
     paraElement.id = "selected-paragraph";
-
-    selectedParagraphData.sentences.forEach((sentenceData, index) => {
-      const sentenceElement = document.createElement("span");
-      sentenceElement.id = `sentence-${index}`;
-
-      sentenceData.pos_data.forEach(([word, pos]) => {
-        const wordElement = document.createElement("span");
-        wordElement.textContent = word + " ";
-        if (pos === "ADJ") {
-          wordElement.classList.add("adjective");
-        }
-        if (pos === "NOUN") {
-          wordElement.classList.add("noun");
-        }
-        sentenceElement.appendChild(wordElement);
-      });
-
-      paraElement.appendChild(sentenceElement);
-    });
-
     contentDiv.appendChild(paraElement);
+
+    typeText(selectedParagraphData.sentences, "selected-paragraph");
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
   }
@@ -99,16 +113,10 @@ function toggleAdjectives() {
 function collectNouns() {
   const paragraph = document.getElementById("selected-paragraph");
   const nouns = [];
-  paragraph.querySelectorAll("span").forEach((sentence) => {
-    sentence.childNodes.forEach((wordElement) => {
-      // check if wordElement is an element has classlist
-      if (
-        wordElement.nodeType === Node.ELEMENT_NODE &&
-        wordElement.classList.contains("noun")
-      ) {
-        nouns.push(wordElement.textContent);
-      }
-    });
+
+  // Directly collect spans with 'noun' class within the paragraph
+  paragraph.querySelectorAll(".noun").forEach((nounElement) => {
+    nouns.push(nounElement.textContent);
   });
 
   displayNouns(nouns);
@@ -116,10 +124,12 @@ function collectNouns() {
 
 function displayNouns(nouns) {
   const nounsDiv = document.getElementById("nounsGrid");
-  nounsDiv.innerHTML = ""; // Clear previous nouns
+  nounsDiv.innerHTML = ""; // clear previous nouns
   nouns.forEach((noun) => {
     const nounElement = document.createElement("div");
     nounElement.textContent = noun;
+    // apply main paragraph style
+    nounElement.classList.add("text-3xl");
     nounsDiv.appendChild(nounElement);
   });
 }
