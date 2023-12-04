@@ -125,11 +125,16 @@ function collectNouns() {
 function displayNouns(nouns) {
   const nounsDiv = document.getElementById("nounsGrid");
   nounsDiv.innerHTML = ""; // clear previous nouns
+
+  // Update the nounsDiv to use grid layout
+  nounsDiv.classList.add("grid", "grid-cols-5", "gap-1"); // Add gap for spacing
+
   nouns.forEach((noun) => {
     const nounElement = document.createElement("div");
-    nounElement.textContent = noun;
+    nounElement.textContent = noun.trim();
     // apply main paragraph style
     nounElement.classList.add("text-3xl");
+    // Add additional styling here if needed
     nounsDiv.appendChild(nounElement);
   });
 }
