@@ -69,5 +69,15 @@ function createLinks() {
 
 createLinks();
 
-const randomJsonPath = jsonPaths[Math.floor(Math.random() * jsonPaths.length)];
-loadAndDisplayJSON(randomJsonPath);
+function loadInitialJSON() {
+  const lastSelectedJsonPath = localStorage.getItem("lastSelectedJsonPath");
+  if (lastSelectedJsonPath) {
+    loadAndDisplayJSON(lastSelectedJsonPath);
+  } else {
+    const randomJsonPath =
+      jsonPaths[Math.floor(Math.random() * jsonPaths.length)];
+    loadAndDisplayJSON(randomJsonPath);
+  }
+}
+
+loadInitialJSON();
