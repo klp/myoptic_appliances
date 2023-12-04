@@ -31,6 +31,9 @@ async function loadAndDisplayJSON(jsonPath) {
         if (pos === "ADJ") {
           wordElement.classList.add("adjective");
         }
+        if (pos === "NOUN") {
+          wordElement.classList.add("noun");
+        }
         sentenceElement.appendChild(wordElement);
       });
 
@@ -93,8 +96,37 @@ function toggleAdjectives() {
   });
 }
 
+function collectNouns() {
+  const paragraph = document.getElementById("selected-paragraph");
+  const nouns = [];
+  paragraph.querySelectorAll("span").forEach((sentence) => {
+    sentence.childNodes.forEach((wordElement) => {
+      // check if wordElement is an element has classlist
+      if (
+        wordElement.nodeType === Node.ELEMENT_NODE &&
+        wordElement.classList.contains("noun")
+      ) {
+        nouns.push(wordElement.textContent);
+      }
+    });
+  });
+
+  displayNouns(nouns);
+}
+
+function displayNouns(nouns) {
+  const nounsDiv = document.getElementById("nounsGrid");
+  nounsDiv.innerHTML = ""; // Clear previous nouns
+  nouns.forEach((noun) => {
+    const nounElement = document.createElement("div");
+    nounElement.textContent = noun;
+    nounsDiv.appendChild(nounElement);
+  });
+}
+
 document
   .getElementById("toggleButton")
   .addEventListener("click", toggleAdjectives);
+document.getElementById("collectNouns").addEventListener("click", collectNouns);
 
 loadInitialJSON();
