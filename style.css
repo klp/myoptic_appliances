@@ -1,0 +1,12 @@
+@keyframes strikeThrough {
+    from {
+      text-decoration-color: transparent;
+    }
+    to {
+      text-decoration-color: inherit;
+    }
+  }
+  
+  .animate-strike {
+    animation: strikeThrough 0.5s linear forwards;
+  }

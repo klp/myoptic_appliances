@@ -70,7 +70,14 @@ function loadInitialJSON() {
 function toggleAdjectives() {
   const adjectives = document.querySelectorAll(".adjective");
   adjectives.forEach((adjective) => {
-    adjective.style.display = adjective.style.display === "none" ? "" : "none";
+    // darker text color
+    adjective.classList.toggle("text-gray-500");
+
+    // strike-through with animation
+    adjective.classList.toggle("line-through");
+    adjective.classList.toggle("animate-strike");
+
+    adjective.classList.toggle("text-2xl");
   });
 }
 
