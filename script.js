@@ -76,6 +76,8 @@ function toggleAdjectives() {
     // strike-through with animation
     adjective.classList.toggle("line-through");
     adjective.classList.toggle("animate-strike");
+
+    adjective.classList.toggle("text-2xl");
   });
 }
 
