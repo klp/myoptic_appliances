@@ -11,7 +11,18 @@ function typeText(paragraphData, elementId, delay = 100) {
       if (wordIndex < sentenceData.pos_data.length) {
         const [word, pos] = sentenceData.pos_data[wordIndex];
         const wordElement = document.createElement("span");
-        wordElement.textContent = word + " ";
+
+        // check if next el is punc, don't add space if so
+        let nextElIsPunct = false;
+        if (wordIndex + 1 < sentenceData.pos_data.length) {
+          const nextPos = sentenceData.pos_data[wordIndex + 1][1];
+          if (nextPos === "PUNCT") {
+            nextElIsPunct = true;
+          }
+        }
+
+        wordElement.textContent = word + (nextElIsPunct ? "" : " ");
+
         if (pos === "ADJ") {
           wordElement.classList.add("adjective");
         }
