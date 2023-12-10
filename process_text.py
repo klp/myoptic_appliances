@@ -42,8 +42,7 @@ for file_path in file_paths:
         structured_paragraph = []
         for sentence in sentences:
             pos_data = tag_pos([sentence])  # Changed here
-            structured_paragraph.append(
-                {"sentence": sentence, "pos_data": pos_data[0]}  
+            structured_paragraph.append({"sentence": sentence, "pos_data": pos_data[0]})
         structured_data.append(
             {"paragraph": paragraph, "sentences": structured_paragraph}
         )
