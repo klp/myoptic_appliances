@@ -15,8 +15,14 @@ function typeText(paragraphData, elementId, delay = 100) {
         if (pos === "ADJ") {
           wordElement.classList.add("adjective");
         }
+        if (pos === "ADV") {
+          wordElement.classList.add("adverb");
+        }
         if (pos === "NOUN") {
           wordElement.classList.add("noun");
+        }
+        if (pos === "VERB") {
+          wordElement.classList.add("verb");
         }
         contentDiv.appendChild(wordElement);
         wordIndex++;
@@ -67,18 +73,46 @@ function loadInitialJSON() {
   }
 }
 
-function toggleAdjectives() {
-  const adjectives = document.querySelectorAll(".adjective");
-  adjectives.forEach((adjective) => {
-    // darker text color
-    adjective.classList.toggle("text-gray-500");
+// function toggleAdjectives() {
+//   const adjectives = document.querySelectorAll(".adjective");
+//   adjectives.forEach((adjective) => {
+//     // darker text color
+//     adjective.classList.toggle("text-gray-500");
 
-    // strike-through with animation
-    adjective.classList.toggle("line-through");
-    adjective.classList.toggle("animate-strike");
+//     // strike-through with animation
+//     adjective.classList.toggle("line-through");
+//     adjective.classList.toggle("animate-strike");
 
-    adjective.classList.toggle("text-2xl");
+//     adjective.classList.toggle("text-2xl");
+//   });
+// }
+
+function strikeThroughClassForElements(className) {
+  const elements = document.querySelectorAll(`.${className}`);
+  elements.forEach((element) => {
+    element.classList.toggle("text-gray-500");
+
+    element.classList.toggle("line-through");
+    element.classList.toggle("animate-stirke");
+
+    element.classList.toggle("text-2xl");
   });
+}
+
+function strikeThroughAdjectives() {
+  strikeThroughClassForElements("adjective");
+}
+
+function strikeThroughAdverbs() {
+  strikeThroughClassForElements("adverb");
+}
+
+function strikeThroughNouns() {
+  strikeThroughClassForElements("noun");
+}
+
+function strikeThroughVerbs() {
+  strikeThroughClassForElements("verb");
 }
 
 function collectNouns() {
@@ -110,9 +144,24 @@ function displayNouns(nouns) {
   });
 }
 
+// document
+//   .getElementById("toggleButton")
+//   .addEventListener("click", toggleAdjectives);
+
+// Bind funcs to buttons
+
 document
-  .getElementById("toggleButton")
-  .addEventListener("click", toggleAdjectives);
+  .getElementById("strikeThroughAdjectives")
+  .addEventListener("click", strikeThroughAdjectives);
+document
+  .getElementById("strikeThroughAdverbs")
+  .addEventListener("click", strikeThroughAdverbs);
+document
+  .getElementById("strikeThroughNouns")
+  .addEventListener("click", strikeThroughNouns);
+document
+  .getElementById("strikeThroughVerbs")
+  .addEventListener("click", strikeThroughVerbs);
 document.getElementById("collectNouns").addEventListener("click", collectNouns);
 
 loadInitialJSON();
