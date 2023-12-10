@@ -1,8 +1,4 @@
-const jsonPaths = [
-  "processed_txt/a_mysterious_night_in_london_process.json",
-  "processed_txt/placards_brass-jewelers_truck-horses_and_steamers_process.json",
-  "processed_txt/what_redburn_saw_in_launcelott's-hey_process.json",
-];
+const jsonPaths = ["processed_txt/comb_queer_chaps_process.json"];
 
 function typeText(paragraphData, elementId, delay = 100) {
   let sentenceIndex = 0;
@@ -59,38 +55,6 @@ async function loadAndDisplayJSON(jsonPath) {
     console.error("Error fetching the JSON file:", error);
   }
 }
-
-function formatLinkText(path) {
-  const formattedText = path
-    .split("/")
-    .pop()
-    .split(".json")[0]
-    .replace(/_/g, " ")
-    .replace(" process", "");
-
-  return formattedText
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-function createLinks() {
-  const linksDiv = document.getElementById("links");
-
-  jsonPaths.forEach((path, index) => {
-    const link = document.createElement("a");
-    link.href = "#";
-    link.textContent = formatLinkText(path);
-    link.onclick = () => loadAndDisplayJSON(path);
-
-    linksDiv.appendChild(link);
-    if (index < jsonPaths.length - 1) {
-      linksDiv.appendChild(document.createTextNode(" | "));
-    }
-  });
-}
-
-createLinks();
 
 function loadInitialJSON() {
   const lastSelectedJsonPath = localStorage.getItem("lastSelectedJsonPath");

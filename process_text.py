@@ -29,9 +29,7 @@ def tag_pos(sentences):
 
 
 file_paths = [
-    "source_txt/placards_brass-jewelers_truck-horses_and_steamers.txt",
-    "source_txt/what_redburn_saw_in_launcelott's-hey.txt",
-    "source_txt/a_mysterious_night_in_london.txt",
+    "source_txt/comb_queer_chaps.txt",
 ]
 
 for file_path in file_paths:
