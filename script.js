@@ -1,6 +1,6 @@
 const jsonPaths = ["processed_txt/comb_queer_chaps_process.json"];
 
-function typeText(paragraphData, elementId, delay = 100) {
+function typeText(paragraphData, elementId, delay = 250) {
   let sentenceIndex = 0;
   let wordIndex = 0;
   const contentDiv = document.getElementById(elementId);
@@ -12,7 +12,7 @@ function typeText(paragraphData, elementId, delay = 100) {
         const [word, pos] = sentenceData.pos_data[wordIndex];
         const wordElement = document.createElement("span");
 
-        // check if next el is punc, don't add space if so
+        // check if next element is punct, don't add space if so
         let nextElIsPunct = false;
         if (wordIndex + 1 < sentenceData.pos_data.length) {
           const nextPos = sentenceData.pos_data[wordIndex + 1][1];
