@@ -15,8 +15,9 @@ function typeText(paragraphData, elementId, delay = 250) {
         // check if next element is punct, don't add space if so
         let nextElIsPunct = false;
         if (wordIndex + 1 < sentenceData.pos_data.length) {
+          const nextWord = sentenceData.pos_data[wordIndex + 1][0];
           const nextPos = sentenceData.pos_data[wordIndex + 1][1];
-          if (nextPos === "PUNCT") {
+          if (nextPos === "PUNCT" || nextWord === "-") {
             nextElIsPunct = true;
           }
         }
