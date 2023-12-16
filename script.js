@@ -15,8 +15,9 @@ function typeText(paragraphData, elementId, delay = 250) {
         // Check if word is surrounded by underscores for italicization
         if (word.startsWith("_") && word.endsWith("_")) {
           const italicizedWord = word.substring(1, word.length - 1);
-          const italicElement = document.createElement("i");
+          const italicElement = document.createElement("span");
           italicElement.textContent = italicizedWord;
+          italicElement.classList.add("italic"); // using Tailwind CSS class
           wordElement.appendChild(italicElement);
         } else {
           let nextElIsPunct = false;
