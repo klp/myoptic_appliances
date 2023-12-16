@@ -12,18 +12,24 @@ function typeText(paragraphData, elementId, delay = 250) {
         const [word, pos] = sentenceData.pos_data[wordIndex];
         const wordElement = document.createElement("span");
 
-        // check if next element is punct, don't add space if so
-        let nextElIsPunct = false;
-        if (wordIndex + 1 < sentenceData.pos_data.length) {
-          const nextWord = sentenceData.pos_data[wordIndex + 1][0];
-          const nextPos = sentenceData.pos_data[wordIndex + 1][1];
-          if (nextPos === "PUNCT" || nextWord === "-") {
-            nextElIsPunct = true;
+        // Check if word is surrounded by underscores for italicization
+        if (word.startsWith("_") && word.endsWith("_")) {
+          const italicizedWord = word.substring(1, word.length - 1);
+          const italicElement = document.createElement("i");
+          italicElement.textContent = italicizedWord;
+          wordElement.appendChild(italicElement);
+        } else {
+          let nextElIsPunct = false;
+          if (wordIndex + 1 < sentenceData.pos_data.length) {
+            const [nextWord, nextPos] = sentenceData.pos_data[wordIndex + 1];
+            if (nextPos === "PUNCT" || nextWord === "-") {
+              nextElIsPunct = true;
+            }
           }
+          wordElement.textContent = word + (nextElIsPunct ? "" : " ");
         }
 
-        wordElement.textContent = word + (nextElIsPunct ? "" : " ");
-
+        // Add classes based on part of speech
         if (pos === "ADJ") {
           wordElement.classList.add("adjective");
         }
@@ -36,6 +42,7 @@ function typeText(paragraphData, elementId, delay = 250) {
         if (pos === "VERB") {
           wordElement.classList.add("verb");
         }
+
         contentDiv.appendChild(wordElement);
         wordIndex++;
         setTimeout(typeWriter, delay);
