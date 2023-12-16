@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myopic appliance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-800 text-slate-100 px-4 lg:px-20">
+    <div id="navbar"></div>
+    <div class="p-6">
+        <div id="content" class="flex flex-col space-y-4 items-left justify-left text-3xl py-10">
+            <div class="text-5xl">Introducing myopic appliance</div>
+            <div class="text-4xl">
+                myopic appliance is a tool that applies computation to the
+                <a href="https://en.wikipedia.org/wiki/Close_reading" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-2 
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                close reading</a>method. In this sense, it is inspired by and a 
+                response to <a href="https://voyant-tools.org/" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                Voyant Tools</a>, which favors the
+                <a href="https://en.wikipedia.org/wiki/Distant_reading" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-2 
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                distant reading</a>approach.
+            </div>
+            <div class="text-4xl">
+                See the
+                <a href="appliance.html" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-2 
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                tool in action</a>or get context on it's inception and 
+                implementation
+                <a href="about.html" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-2 
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                here</a> 
+            </div>
+
+        </div>
+    </div>
+    <script>
+        // load the navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('navbar.html')
+              .then(response => response.text())
+              .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+              });
+        });
+      </script> 
+</body>
+</html>
