@@ -12,7 +12,7 @@ function typeText(paragraphData, elementId, delay = 250) {
         const [word, pos] = sentenceData.pos_data[wordIndex];
         const wordElement = document.createElement("span");
 
-        // Check if word is surrounded by underscores for italicization
+        // check if word is surrounded by underscores for italicization
         if (word.startsWith("_") && word.endsWith("_")) {
           const italicizedWord = word.substring(1, word.length - 1);
           const italicElement = document.createElement("span");
@@ -30,7 +30,7 @@ function typeText(paragraphData, elementId, delay = 250) {
           wordElement.textContent = word + (nextElIsPunct ? "" : " ");
         }
 
-        // Add classes based on part of speech
+        // add classes based on part of speech
         if (pos === "ADJ") {
           wordElement.classList.add("adjective");
         }
