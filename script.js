@@ -225,6 +225,12 @@ function displayNouns(nouns) {
 
 // init
 
+document.getElementById("loadPassage").addEventListener("click", function () {
+  const randomJsonPath =
+    jsonPaths[Math.floor(Math.random() * jsonPaths.length)];
+  loadAndDisplayJSON(randomJsonPath);
+});
+
 document
   .getElementById("options-menu")
   .addEventListener("click", toggleDropdown);
