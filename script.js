@@ -93,29 +93,23 @@ function loadInitialJSON() {
   }
 }
 
-function deflateClassForElements(className) {
-  const elements = document.querySelectorAll(`.${className}`);
-  elements.forEach((element) => {
-    element.classList.toggle("text-slate-400");
-
-    element.classList.toggle("line-through");
-    element.classList.toggle("animate-stirke");
-
-    element.classList.toggle("text-2xl");
-  });
-}
-
 function toggleDropdown() {
   const dropdownContent = document.querySelector("#dropdown div[role='menu']");
   dropdownContent.classList.toggle("hidden");
 }
 
+let currentMode = "";
+
 function handleDropdownSelection(event) {
   event.preventDefault();
 
   const selectedItemText = event.target.textContent;
+  const selectedItemValue = event.target.dataset.value;
+  currentMode = selectedItemValue;
   const optionsMenuButton = document.getElementById("options-menu");
   const svgIcon = optionsMenuButton.querySelector("svg");
+
+  currentMode = selectedItemValue;
 
   // update button text and re-append the SVG icon
   optionsMenuButton.textContent = selectedItemText;
@@ -124,7 +118,6 @@ function handleDropdownSelection(event) {
   // close the dropdown
   toggleDropdown();
 
-  const selectedItemValue = event.target.dataset.value;
   console.log("Selected:", selectedItemValue);
 
   switch (selectedItemValue) {
@@ -165,6 +158,12 @@ function clearPartsOfSpeechButtonSelections() {
   document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
     button.classList.remove("bg-teal-500", "text-white");
     button.classList.add("bg-transparent", "text-teal-500");
+
+    if (currentMode === "emphasize") {
+      inflateClassForElements(partOfSpeech);
+    } else if (currentMode === "de-emphasize") {
+      deflateClassForElements(partOfSpeech);
+    }
   });
 }
 
@@ -180,9 +179,9 @@ document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
 
     // call functions to emphasize or de-emphasize based on selection
     if (isSelected) {
-      emphasizePartOfSpeech(partOfSpeech);
+      inflateClassForElements(partOfSpeech);
     } else {
-      deEmphasizePartOfSpeech(partOfSpeech);
+      deflateClassForElements(partOfSpeech);
     }
   });
 });
@@ -193,6 +192,18 @@ function inflateClassForElements(className) {
     element.classList.toggle("text-slate-50");
     element.classList.toggle("font-bold");
     element.classList.toggle("text-4xl");
+  });
+}
+
+function deflateClassForElements(className) {
+  const elements = document.querySelectorAll(`.${className}`);
+  elements.forEach((element) => {
+    element.classList.toggle("text-slate-400");
+
+    element.classList.toggle("line-through");
+    element.classList.toggle("animate-stirke");
+
+    element.classList.toggle("text-2xl");
   });
 }
 
@@ -270,6 +281,11 @@ document.querySelectorAll(".dropdown-item").forEach((item) => {
 document.getElementById("dropdown").style.display = "none";
 
 document.addEventListener("click", handleClickOutside);
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("dropdown").style.display = "none";
+  document.getElementById("partsOfSpeechButtons").style.display = "none";
+});
 
 document
   .getElementById("deflateAdjectives")
