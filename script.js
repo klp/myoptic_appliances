@@ -143,6 +143,22 @@ function handleDropdownSelection(event) {
     document.getElementById("partsOfSpeechButtons").style.display = "block";
     clearPartsOfSpeechButtonSelections(); // clear the button selections
   }
+  const dropdownContent = document.querySelector("#dropdown div[role='menu']");
+  dropdownContent.classList.add("hidden");
+}
+
+function handleClickOutside(event) {
+  const dropdown = document.getElementById("dropdown");
+  const dropdownMenu = dropdown.querySelector("div[role='menu']");
+  const optionsMenuButton = document.getElementById("options-menu");
+
+  // check if the click is outside the dropdown and the dropdown is not hidden
+  if (
+    !dropdown.contains(event.target) &&
+    !dropdownMenu.classList.contains("hidden")
+  ) {
+    toggleDropdown();
+  }
 }
 
 function clearPartsOfSpeechButtonSelections() {
@@ -252,6 +268,8 @@ document.querySelectorAll(".dropdown-item").forEach((item) => {
 });
 
 document.getElementById("dropdown").style.display = "none";
+
+document.addEventListener("click", handleClickOutside);
 
 document
   .getElementById("deflateAdjectives")
