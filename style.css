@@ -7,6 +7,6 @@
     }
   }
   
-  .animate-strike {
+.animate-strike {
     animation: strikeThrough 0.5s linear forwards;
-  }
+  }  
