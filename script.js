@@ -1,6 +1,6 @@
 const jsonPaths = ["processed_txt/comb_queer_chaps_process.json"];
 
-function typeText(paragraphData, elementId, delay = 250) {
+function typeText(paragraphData, elementId, delay = 250, callback) {
   let sentenceIndex = 0;
   let wordIndex = 0;
   const contentDiv = document.getElementById(elementId);
@@ -12,12 +12,11 @@ function typeText(paragraphData, elementId, delay = 250) {
         const [word, pos] = sentenceData.pos_data[wordIndex];
         const wordElement = document.createElement("span");
 
-        // check if word is surrounded by underscores for italicization
         if (word.startsWith("_") && word.endsWith("_")) {
           const italicizedWord = word.substring(1, word.length - 1);
           const italicElement = document.createElement("span");
           italicElement.textContent = italicizedWord;
-          italicElement.classList.add("italic"); // using Tailwind CSS class
+          italicElement.classList.add("italic");
           wordElement.appendChild(italicElement);
         } else {
           let nextElIsPunct = false;
@@ -30,19 +29,10 @@ function typeText(paragraphData, elementId, delay = 250) {
           wordElement.textContent = word + (nextElIsPunct ? "" : " ");
         }
 
-        // add classes based on part of speech
-        if (pos === "ADJ") {
-          wordElement.classList.add("adjective");
-        }
-        if (pos === "ADV") {
-          wordElement.classList.add("adverb");
-        }
-        if (pos === "NOUN") {
-          wordElement.classList.add("noun");
-        }
-        if (pos === "VERB") {
-          wordElement.classList.add("verb");
-        }
+        if (pos === "ADJ") wordElement.classList.add("adjective");
+        if (pos === "ADV") wordElement.classList.add("adverb");
+        if (pos === "NOUN") wordElement.classList.add("noun");
+        if (pos === "VERB") wordElement.classList.add("verb");
 
         contentDiv.appendChild(wordElement);
         wordIndex++;
@@ -53,8 +43,11 @@ function typeText(paragraphData, elementId, delay = 250) {
         wordIndex = 0;
         setTimeout(typeWriter, delay);
       }
+    } else {
+      if (callback) callback();
     }
   }
+
   typeWriter();
 }
 
@@ -70,13 +63,20 @@ async function loadAndDisplayJSON(jsonPath) {
     const selectedParagraphData = data[selectedParagraphIndex];
 
     const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = ""; // clear previous content
+    contentDiv.innerHTML = ""; // Clear previous content
 
     const paraElement = document.createElement("p");
     paraElement.id = "selected-paragraph";
     contentDiv.appendChild(paraElement);
 
-    typeText(selectedParagraphData.sentences, "selected-paragraph");
+    typeText(
+      selectedParagraphData.sentences,
+      "selected-paragraph",
+      250,
+      function () {
+        document.getElementById("dropdown").style.display = "block"; // show dropdown
+      }
+    );
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
   }
@@ -93,24 +93,104 @@ function loadInitialJSON() {
   }
 }
 
-function deflateClassForElements(className) {
-  const elements = document.querySelectorAll(`.${className}`);
-  elements.forEach((element) => {
-    element.classList.toggle("text-slate-400");
+function toggleDropdown() {
+  const dropdownContent = document.querySelector("#dropdown div[role='menu']");
+  dropdownContent.classList.toggle("hidden");
+}
 
-    element.classList.toggle("line-through");
-    element.classList.toggle("animate-stirke");
+let currentMode = "";
 
-    element.classList.toggle("text-2xl");
+function handleDropdownSelection(event) {
+  event.preventDefault();
+
+  const selectedItemText = event.target.textContent;
+  const selectedItemValue = event.target.dataset.value;
+  currentMode = selectedItemValue;
+  const optionsMenuButton = document.getElementById("options-menu");
+  const svgIcon = optionsMenuButton.querySelector("svg");
+
+  currentMode = selectedItemValue;
+
+  // update button text and re-append the SVG icon
+  optionsMenuButton.textContent = selectedItemText;
+  optionsMenuButton.appendChild(svgIcon);
+
+  // close the dropdown
+  toggleDropdown();
+
+  console.log("Selected:", selectedItemValue);
+
+  switch (selectedItemValue) {
+    case "emphasize":
+      // call function for emphasize
+      break;
+    case "de-emphasize":
+      // call function for de-emphasize
+      break;
+  }
+
+  if (
+    selectedItemValue === "emphasize" ||
+    selectedItemValue === "de-emphasize"
+  ) {
+    document.getElementById("partsOfSpeechButtons").style.display = "block";
+    clearPartsOfSpeechButtonSelections(); // clear the button selections
+  }
+  const dropdownContent = document.querySelector("#dropdown div[role='menu']");
+  dropdownContent.classList.add("hidden");
+}
+
+function handleClickOutside(event) {
+  const dropdown = document.getElementById("dropdown");
+  const dropdownMenu = dropdown.querySelector("div[role='menu']");
+  const optionsMenuButton = document.getElementById("options-menu");
+
+  // check if the click is outside the dropdown and the dropdown is not hidden
+  if (
+    !dropdown.contains(event.target) &&
+    !dropdownMenu.classList.contains("hidden")
+  ) {
+    toggleDropdown();
+  }
+}
+
+function clearPartsOfSpeechButtonSelections() {
+  document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
+    button.classList.remove("bg-teal-500", "text-white");
+    button.classList.add("bg-transparent", "text-teal-500");
   });
 }
+
+document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
+  button.addEventListener("click", function () {
+    const partOfSpeech = this.id.replace("btn", "").toLowerCase();
+    if (currentMode === "emphasize") {
+      inflateClassForElements(partOfSpeech);
+    } else if (currentMode === "de-emphasize") {
+      deflateClassForElements(partOfSpeech);
+    }
+  });
+});
 
 function inflateClassForElements(className) {
   const elements = document.querySelectorAll(`.${className}`);
   elements.forEach((element) => {
-    element.classList.toggle("text-slate-50");
-    element.classList.toggle("font-bold");
-    element.classList.toggle("text-4xl");
+    element.classList.toggle("font-bold"); // bold font
+    element.classList.toggle("text-4xl"); // larger text size
+    element.classList.toggle("text-white"); // white color text
+    // remove de-emphasize styles if they are present
+    element.classList.remove("text-slate-100", "text-3xl");
+  });
+}
+
+function deflateClassForElements(className) {
+  const elements = document.querySelectorAll(`.${className}`);
+  elements.forEach((element) => {
+    element.classList.toggle("line-through"); // line-through
+    element.classList.toggle("text-slate-400"); // gray color text
+    element.classList.toggle("text-2xl"); // smaller text size
+    // remove emphasize styles if they are present
+    element.classList.remove("text-slate-100", "text-3xl");
   });
 }
 
@@ -175,7 +255,24 @@ function displayNouns(nouns) {
   });
 }
 
-// Bind funcs to buttons
+// init
+
+document
+  .getElementById("options-menu")
+  .addEventListener("click", toggleDropdown);
+
+document.querySelectorAll(".dropdown-item").forEach((item) => {
+  item.addEventListener("click", handleDropdownSelection);
+});
+
+document.getElementById("dropdown").style.display = "none";
+
+document.addEventListener("click", handleClickOutside);
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("dropdown").style.display = "none";
+  document.getElementById("partsOfSpeechButtons").style.display = "none";
+});
 
 document
   .getElementById("deflateAdjectives")
