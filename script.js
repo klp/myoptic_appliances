@@ -274,24 +274,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("partsOfSpeechButtons").style.display = "none";
 });
 
-document
-  .getElementById("deflateAdjectives")
-  .addEventListener("click", deflateAdjectives);
-document
-  .getElementById("deflateAdverbs")
-  .addEventListener("click", deflateAdverbs);
-document.getElementById("deflateNouns").addEventListener("click", deflateNouns);
-document.getElementById("deflateVerbs").addEventListener("click", deflateVerbs);
-document
-  .getElementById("inflateAdjectives")
-  .addEventListener("click", inflateAdjectives);
-document
-  .getElementById("inflateAdverbs")
-  .addEventListener("click", inflateAdverbs);
-document.getElementById("inflateNouns").addEventListener("click", inflateNouns);
-document
-  .getElementById("inflateVerbs")
-  .addEventListener("click", instflateVerbs);
-document.getElementById("collectNouns").addEventListener("click", collectNouns);
+// document.getElementById("collectNouns").addEventListener("click", collectNouns);
 
 loadInitialJSON();
