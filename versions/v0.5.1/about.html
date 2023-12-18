@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myopic appliance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // load the navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('navbar.html')
+              .then(response => response.text())
+              .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+              });
+        });
+      </script> 
+</head>
+<body class="bg-slate-800 text-slate-100 px-4 lg:px-20">
+    <div id="navbar"></div>
+    <div class="p-6">
+        <div id="content" class="flex items-center justify-left text-3xl py-10">
+            <p>
+                This project was initiated by a final project assignment 
+                for the course <a href="https://dh780fa23.commons.gc.cuny.edu/" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-2 
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                Building, Playing, Thinking</a>at the CUNY Graduate
+                Center.
+                <br>
+                <br>
+                The source material is from three chapters of 
+                <a href="https://www.gutenberg.org/cache/epub/8118/pg8118.txt" 
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white
+                transition duration-300 bg-transparent hover:bg-teal-500">
+                Herman Melville's Redburn</a>.
+            </p>
+            <p>
+                
+            </p>
+        </div>
+    </div>
+</body>
+</html>
