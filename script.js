@@ -158,29 +158,15 @@ function clearPartsOfSpeechButtonSelections() {
   document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
     button.classList.remove("bg-teal-500", "text-white");
     button.classList.add("bg-transparent", "text-teal-500");
-
-    if (currentMode === "emphasize") {
-      inflateClassForElements(partOfSpeech);
-    } else if (currentMode === "de-emphasize") {
-      deflateClassForElements(partOfSpeech);
-    }
   });
 }
 
 document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
   button.addEventListener("click", function () {
-    this.classList.toggle("bg-teal-500");
-    this.classList.toggle("text-white");
-
-    // get  selected part of speech from the button's ID or data attribute
     const partOfSpeech = this.id.replace("btn", "").toLowerCase();
-    // determine if the button is now selected or deselected
-    const isSelected = this.classList.contains("bg-teal-500");
-
-    // call functions to emphasize or de-emphasize based on selection
-    if (isSelected) {
+    if (currentMode === "emphasize") {
       inflateClassForElements(partOfSpeech);
-    } else {
+    } else if (currentMode === "de-emphasize") {
       deflateClassForElements(partOfSpeech);
     }
   });
@@ -189,21 +175,22 @@ document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
 function inflateClassForElements(className) {
   const elements = document.querySelectorAll(`.${className}`);
   elements.forEach((element) => {
-    element.classList.toggle("text-slate-50");
-    element.classList.toggle("font-bold");
-    element.classList.toggle("text-4xl");
+    element.classList.toggle("font-bold"); // bold font
+    element.classList.toggle("text-4xl"); // larger text size
+    element.classList.toggle("text-white"); // white color text
+    // remove de-emphasize styles if they are present
+    element.classList.remove("text-slate-100", "text-3xl");
   });
 }
 
 function deflateClassForElements(className) {
   const elements = document.querySelectorAll(`.${className}`);
   elements.forEach((element) => {
-    element.classList.toggle("text-slate-400");
-
-    element.classList.toggle("line-through");
-    element.classList.toggle("animate-stirke");
-
-    element.classList.toggle("text-2xl");
+    element.classList.toggle("line-through"); // line-through
+    element.classList.toggle("text-slate-400"); // gray color text
+    element.classList.toggle("text-2xl"); // smaller text size
+    // remove emphasize styles if they are present
+    element.classList.remove("text-slate-100", "text-3xl");
   });
 }
 
