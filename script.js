@@ -31,7 +31,11 @@ function typeText(paragraphData, elementId, delay = 250, callback) {
 
         if (pos === "ADJ") wordElement.classList.add("adjective");
         if (pos === "ADV") wordElement.classList.add("adverb");
+        if (pos === "CCONJ") wordElement.classList.add("coordinating-conj");
+        if (pos === "SCONJ") wordElement.classList.add("subordinating-conj");
+        if (pos === "DET") wordElement.classList.add("determiner");
         if (pos === "NOUN") wordElement.classList.add("noun");
+        if (pos === "PRON") wordElement.classList.add("pronoun");
         if (pos === "VERB") wordElement.classList.add("verb");
 
         contentDiv.appendChild(wordElement);
