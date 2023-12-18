@@ -194,38 +194,6 @@ function deflateClassForElements(className) {
   });
 }
 
-function deflateAdjectives() {
-  deflateClassForElements("adjective");
-}
-
-function deflateAdverbs() {
-  deflateClassForElements("adverb");
-}
-
-function deflateNouns() {
-  deflateClassForElements("noun");
-}
-
-function deflateVerbs() {
-  deflateClassForElements("verb");
-}
-
-function inflateAdjectives() {
-  inflateClassForElements("adjective");
-}
-
-function inflateAdverbs() {
-  inflateClassForElements("adverb");
-}
-
-function inflateNouns() {
-  inflateClassForElements("noun");
-}
-
-function instflateVerbs() {
-  inflateClassForElements("verb");
-}
-
 function collectNouns() {
   const paragraph = document.getElementById("selected-paragraph");
   const nouns = [];
