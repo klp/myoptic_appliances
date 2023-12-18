@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myopic appliance</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // load the navbar
+      document.addEventListener('DOMContentLoaded', function() {
+          fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById('navbar').innerHTML = data;
+            });
+      });
+    </script> 
 </head>
 <body class="bg-slate-800 text-slate-100 px-4 lg:px-20">
     <div id="navbar"></div>
@@ -24,16 +34,6 @@
         <div id="content" class="flex items-center justify-left text-3xl py-10"></div>
         <div id="nounsGrid" class="text-center my-2 grid-cols-5"></div>
     </div>
-    <script>
-        // load the navbar
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('navbar.html')
-              .then(response => response.text())
-              .then(data => {
-                document.getElementById('navbar').innerHTML = data;
-              });
-        });
-      </script> 
     <script src="script.js"></script>
 </body>
 </html>
