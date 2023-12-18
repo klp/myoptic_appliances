@@ -121,7 +121,7 @@ function handleDropdownSelection(event) {
   optionsMenuButton.textContent = selectedItemText;
   optionsMenuButton.appendChild(svgIcon);
 
-  // Close the dropdown
+  // close the dropdown
   toggleDropdown();
 
   const selectedItemValue = event.target.dataset.value;
@@ -134,7 +134,33 @@ function handleDropdownSelection(event) {
       // call function for de-emphasize
       break;
   }
+
+  if (
+    selectedItemValue === "emphasize" ||
+    selectedItemValue === "de-emphasize"
+  ) {
+    document.getElementById("partsOfSpeechButtons").style.display = "block";
+  }
 }
+
+document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
+  button.addEventListener("click", function () {
+    this.classList.toggle("bg-teal-500");
+    this.classList.toggle("text-white");
+
+    // get  selected part of speech from the button's ID or data attribute
+    const partOfSpeech = this.id.replace("btn", "").toLowerCase();
+    // determine if the button is now selected or deselected
+    const isSelected = this.classList.contains("bg-teal-500");
+
+    // call functions to emphasize or de-emphasize based on selection
+    if (isSelected) {
+      emphasizePartOfSpeech(partOfSpeech);
+    } else {
+      deEmphasizePartOfSpeech(partOfSpeech);
+    }
+  });
+});
 
 function inflateClassForElements(className) {
   const elements = document.querySelectorAll(`.${className}`);
