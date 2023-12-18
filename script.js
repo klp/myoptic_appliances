@@ -1,6 +1,6 @@
 const jsonPaths = ["processed_txt/comb_queer_chaps_process.json"];
 
-function typeText(paragraphData, elementId, delay = 250) {
+function typeText(paragraphData, elementId, delay = 250, callback) {
   let sentenceIndex = 0;
   let wordIndex = 0;
   const contentDiv = document.getElementById(elementId);
@@ -12,12 +12,11 @@ function typeText(paragraphData, elementId, delay = 250) {
         const [word, pos] = sentenceData.pos_data[wordIndex];
         const wordElement = document.createElement("span");
 
-        // check if word is surrounded by underscores for italicization
         if (word.startsWith("_") && word.endsWith("_")) {
           const italicizedWord = word.substring(1, word.length - 1);
           const italicElement = document.createElement("span");
           italicElement.textContent = italicizedWord;
-          italicElement.classList.add("italic"); // using Tailwind CSS class
+          italicElement.classList.add("italic");
           wordElement.appendChild(italicElement);
         } else {
           let nextElIsPunct = false;
@@ -30,19 +29,10 @@ function typeText(paragraphData, elementId, delay = 250) {
           wordElement.textContent = word + (nextElIsPunct ? "" : " ");
         }
 
-        // add classes based on part of speech
-        if (pos === "ADJ") {
-          wordElement.classList.add("adjective");
-        }
-        if (pos === "ADV") {
-          wordElement.classList.add("adverb");
-        }
-        if (pos === "NOUN") {
-          wordElement.classList.add("noun");
-        }
-        if (pos === "VERB") {
-          wordElement.classList.add("verb");
-        }
+        if (pos === "ADJ") wordElement.classList.add("adjective");
+        if (pos === "ADV") wordElement.classList.add("adverb");
+        if (pos === "NOUN") wordElement.classList.add("noun");
+        if (pos === "VERB") wordElement.classList.add("verb");
 
         contentDiv.appendChild(wordElement);
         wordIndex++;
@@ -53,8 +43,11 @@ function typeText(paragraphData, elementId, delay = 250) {
         wordIndex = 0;
         setTimeout(typeWriter, delay);
       }
+    } else {
+      if (callback) callback();
     }
   }
+
   typeWriter();
 }
 
@@ -70,13 +63,20 @@ async function loadAndDisplayJSON(jsonPath) {
     const selectedParagraphData = data[selectedParagraphIndex];
 
     const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = ""; // clear previous content
+    contentDiv.innerHTML = ""; // Clear previous content
 
     const paraElement = document.createElement("p");
     paraElement.id = "selected-paragraph";
     contentDiv.appendChild(paraElement);
 
-    typeText(selectedParagraphData.sentences, "selected-paragraph");
+    typeText(
+      selectedParagraphData.sentences,
+      "selected-paragraph",
+      250,
+      function () {
+        document.getElementById("dropdown").style.display = "block"; // show dropdown
+      }
+    );
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
   }
@@ -215,6 +215,8 @@ document
 document.querySelectorAll(".dropdown-item").forEach((item) => {
   item.addEventListener("click", handleDropdownSelection);
 });
+
+document.getElementById("dropdown").style.display = "none";
 
 document
   .getElementById("deflateAdjectives")
