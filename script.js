@@ -179,7 +179,7 @@ function inflateClassForElements(className) {
     element.classList.toggle("text-4xl"); // larger text size
     element.classList.toggle("text-white"); // white color text
     // remove de-emphasize styles if they are present
-    element.classList.remove("text-slate-100", "text-3xl");
+    element.classList.remove("line-through", "text-slate-400", "text-2xl");
   });
 }
 
@@ -190,7 +190,7 @@ function deflateClassForElements(className) {
     element.classList.toggle("text-slate-400"); // gray color text
     element.classList.toggle("text-2xl"); // smaller text size
     // remove emphasize styles if they are present
-    element.classList.remove("text-slate-100", "text-3xl");
+    element.classList.remove("font-bold", "text-4xl", "text-white");
   });
 }
 
