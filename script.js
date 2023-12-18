@@ -126,6 +126,7 @@ function handleDropdownSelection(event) {
 
   const selectedItemValue = event.target.dataset.value;
   console.log("Selected:", selectedItemValue);
+
   switch (selectedItemValue) {
     case "emphasize":
       // call function for emphasize
@@ -140,7 +141,15 @@ function handleDropdownSelection(event) {
     selectedItemValue === "de-emphasize"
   ) {
     document.getElementById("partsOfSpeechButtons").style.display = "block";
+    clearPartsOfSpeechButtonSelections(); // clear the button selections
   }
+}
+
+function clearPartsOfSpeechButtonSelections() {
+  document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
+    button.classList.remove("bg-teal-500", "text-white");
+    button.classList.add("bg-transparent", "text-teal-500");
+  });
 }
 
 document.querySelectorAll(".parts-of-speech-btn").forEach((button) => {
