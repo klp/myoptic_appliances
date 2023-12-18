@@ -105,6 +105,37 @@ function deflateClassForElements(className) {
   });
 }
 
+function toggleDropdown() {
+  const dropdownContent = document.querySelector("#dropdown div[role='menu']");
+  dropdownContent.classList.toggle("hidden");
+}
+
+function handleDropdownSelection(event) {
+  event.preventDefault();
+
+  const selectedItemText = event.target.textContent;
+  const optionsMenuButton = document.getElementById("options-menu");
+  const svgIcon = optionsMenuButton.querySelector("svg");
+
+  // update button text and re-append the SVG icon
+  optionsMenuButton.textContent = selectedItemText;
+  optionsMenuButton.appendChild(svgIcon);
+
+  // Close the dropdown
+  toggleDropdown();
+
+  const selectedItemValue = event.target.dataset.value;
+  console.log("Selected:", selectedItemValue);
+  switch (selectedItemValue) {
+    case "emphasize":
+      // call function for emphasize
+      break;
+    case "de-emphasize":
+      // call function for de-emphasize
+      break;
+  }
+}
+
 function inflateClassForElements(className) {
   const elements = document.querySelectorAll(`.${className}`);
   elements.forEach((element) => {
@@ -175,7 +206,15 @@ function displayNouns(nouns) {
   });
 }
 
-// Bind funcs to buttons
+// init
+
+document
+  .getElementById("options-menu")
+  .addEventListener("click", toggleDropdown);
+
+document.querySelectorAll(".dropdown-item").forEach((item) => {
+  item.addEventListener("click", handleDropdownSelection);
+});
 
 document
   .getElementById("deflateAdjectives")
